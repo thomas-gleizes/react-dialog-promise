@@ -8,12 +8,15 @@
     "url": "https://github.com/thomas-gleizes/react-dialog-promise"
   },
   "homepage": "https://github.com/thomas-gleizes/react-dialog-promise#readme",
+  "bugs": {
+    "url": "https://github.com/thomas-gleizes/react-dialog-promise/issues"
+  },
   "files": [
     "dist",
     "src"
   ],
   "engines": {
-    "node": ">=10"
+    "npm": ">=5.0.0"
   },
   "scripts": {
     "start": "tsdx watch",
@@ -56,8 +59,8 @@
     "@types/react": "^17.0.2",
     "@types/react-dom": "^17.0.2",
     "husky": "^8.0.1",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
     "size-limit": "^7.0.8",
     "tsdx": "^0.13.3",
     "tslib": "^2.4.0",
