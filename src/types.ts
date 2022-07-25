@@ -24,7 +24,7 @@ export declare type DialogComponent<Props = {}, Result = any> = Component<
   DialogProps<Result> & Props
 >;
 
-export declare type DialogProviderProps = { children: ReactNode; options: DialogOptions };
+export declare type DialogProviderProps = { children: ReactNode; options?: DialogOptions };
 
 export declare type DialogContextValues = {
   dialogs: DialogState;
