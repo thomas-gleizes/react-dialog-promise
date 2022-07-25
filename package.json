@@ -3,6 +3,11 @@
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/thomas-gleizes/react-dialog-promise"
+  },
+  "homepage": "https://github.com/thomas-gleizes/react-dialog-promise#readme",
   "files": [
     "dist",
     "src"
@@ -48,8 +53,8 @@
   ],
   "devDependencies": {
     "@size-limit/preset-small-lib": "^7.0.8",
-    "@types/react": "^18.0.15",
-    "@types/react-dom": "^18.0.6",
+    "@types/react": "^17.0.2",
+    "@types/react-dom": "^17.0.2",
     "husky": "^8.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
