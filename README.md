@@ -53,7 +53,6 @@ interface Props {
 type Result = boolean
 
 const MyDialog: DialogComponent<Props, Result> = ({ isOpen, close, title }) => {
-
   return (
     <Modal
       isOpen={isOpen}
@@ -88,9 +87,9 @@ const MyApp: React.FC = () => {
   const dialog = useDialog();
 
   const handleClick = async () => {
-    const result = dialog(MyDialog, { title: "My easy to use dialog" });
+    const result = await dialog(MyDialog, { title: "My easy to use dialog" });
 
-    console.log("Dialog result :", dialog)
+    console.log("Dialog result :", result)
   }
 
   return (
