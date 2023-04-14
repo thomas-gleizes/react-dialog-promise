@@ -6,7 +6,7 @@ import type {
   DialogContextValues,
   DialogProviderProps,
   DialogState,
-} from './index';
+} from '../index';
 import DialogWrapper from './DialogWrapper';
 
 export const DialogContext = createContext<DialogContextValues>({} as any);
@@ -16,13 +16,13 @@ const DialogProvider: Component<DialogProviderProps> = ({ children, options }) =
 
   const addDialog = (id: string, dialog: Dialog) => setDialogs({ ...dialogs, [id]: { ...dialog } });
 
-  const removeDialog = (id: string) => {
+  const closeDialog = (id: string) => {
     delete dialogs[id];
     setDialogs({ ...dialogs });
   };
 
   return (
-    <DialogContext.Provider value={{ dialogs, removeDialog, addDialog }}>
+    <DialogContext.Provider value={{ dialogs, closeDialog: closeDialog, addDialog }}>
       {children}
       <DialogWrapper options={options} />
     </DialogContext.Provider>

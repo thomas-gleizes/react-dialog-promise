@@ -29,10 +29,15 @@ export declare type DialogProviderProps = { children: ReactNode; options?: Dialo
 export declare type DialogContextValues = {
   dialogs: DialogState;
   addDialog: (id: string, dialog: Dialog) => void;
-  removeDialog: (id: string) => void;
+  closeDialog: (id: string) => void;
 };
 
-export declare type useDialogResult = <Props, Result>(
-  component: DialogComponent<Props, Result>,
-  props: Props
-) => Promise<Result>;
+export declare type UseDialogHookResult<Props, Result> = {
+  open: (props: Props) => Promise<Result>;
+  close: () => void;
+  uid: string;
+};
+
+export declare type UseDialogHook = <Props, Result>(
+  modal: DialogComponent<Props, Result>
+) => UseDialogHookResult<Props, Result>;

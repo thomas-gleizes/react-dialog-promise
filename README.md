@@ -77,17 +77,18 @@ const MyDialog: DialogComponent<Props, Result> = ({ isOpen, close, title }) => {
 export default MyDialog
 ```
 
-Finally, you can use dialogs in your app
+Finally, you can use your dialog component in your app
 
 ```typescript jsx
 import React from 'react';
 import { useDialog } from 'react-dialog-promise';
+import MyDialog from "./MyDialog";
 
 const MyApp: React.FC = () => {
-  const dialog = useDialog();
+  const myDialog = useDialog(MyDialog);
 
   const handleClick = async () => {
-    const result = await dialog(MyDialog, { title: "My easy to use dialog" });
+    const result = await myDialog.open({ title: "My easy to use dialog" });
 
     console.log("Dialog result :", result)
   }
@@ -103,6 +104,3 @@ const MyApp: React.FC = () => {
 export default MyApp;
 
 ```
-
-## API
-

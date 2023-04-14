@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import useDialogContext from './useDialogContext';
-import { Component, Dialog, DialogOptions } from './index';
+import { Component, Dialog, DialogOptions } from '../index';
 
 const DEFAULT_TIMEOUT = 300;
 
@@ -14,7 +14,7 @@ declare type DialogContainer = Component<{
 declare type DialogWrapper = Component<{ options: DialogOptions }>;
 
 const DialogContainer: DialogContainer = ({ id, dialog, options }) => {
-  const { removeDialog } = useDialogContext();
+  const { closeDialog } = useDialogContext();
 
   const [isOpen, setIsOpen] = useState<boolean>(true);
 
@@ -22,7 +22,7 @@ const DialogContainer: DialogContainer = ({ id, dialog, options }) => {
     dialog.resolve(result);
     setIsOpen(false);
 
-    window.setTimeout(() => removeDialog(id), options?.timeout || DEFAULT_TIMEOUT);
+    window.setTimeout(() => closeDialog(id), options?.timeout || DEFAULT_TIMEOUT);
   };
 
   return <dialog.component isOpen={isOpen} close={handleClose} {...dialog.props} />;
