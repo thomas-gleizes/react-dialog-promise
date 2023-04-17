@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
 
 import useDialogContext from './useDialogContext';
-import { Component, Dialog, DialogOptions } from '../index';
+import { Component, Dialog, DialogOptions } from '../types';
 
 const DEFAULT_TIMEOUT = 300;
 
 declare type DialogContainer = Component<{
   id: string;
   dialog: Dialog;
-  options: DialogOptions;
+  options?: DialogOptions;
 }>;
 
-declare type DialogWrapper = Component<{ options: DialogOptions }>;
+declare type DialogWrapper = Component<{ options?: DialogOptions }>;
 
 const DialogContainer: DialogContainer = ({ id, dialog, options }) => {
   const { closeDialog } = useDialogContext();

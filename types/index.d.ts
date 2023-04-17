@@ -1,13 +1,11 @@
-import React from 'react';
-
 export declare type Component<Props = {}> = React.FunctionComponent<Props>;
 
 export declare type ReactNode = React.ReactNode;
 
-export declare type Dialog = {
-  component: Component;
-  props: any;
-  resolve: (r: any) => void;
+export declare type Dialog<Props = any, Result = any> = {
+  component: DialogComponent<Result>;
+  props: Props;
+  resolve: (r: Result) => void;
   reject: (r: any) => void;
 };
 

@@ -1,5 +1,5 @@
 {
-  "version": "0.3.0",
+  "version": "0.3.1",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -11,7 +11,8 @@
   },
   "files": [
     "dist",
-    "src"
+    "src",
+    "types"
   ],
   "main": "dist/index.js",
   "typings": "src/types.d.ts",
@@ -21,11 +22,12 @@
   "module": "dist/react-dialog-promise.esm.js",
   "scripts": {
     "clean": "rm -r dist",
-    "build": "pnpm clean && tsup"
+    "build": "pnpm clean && tsup --dts"
   },
   "devDependencies": {
     "@types/react": "^17.0.2",
     "@types/react-dom": "^17.0.2",
+    "@types/uuid": "^9.0.1",
     "prettier": "^2.8.7",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
@@ -47,8 +49,7 @@
     ],
     "format": [
       "cjs",
-      "esm",
-      "dts"
+      "esm"
     ],
     "splitting": false,
     "sourcemap": true,

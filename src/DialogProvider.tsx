@@ -1,24 +1,27 @@
 import React, { createContext, useState } from 'react';
 
+import DialogWrapper from './DialogWrapper';
 import type {
   Component,
   Dialog,
   DialogContextValues,
   DialogProviderProps,
   DialogState,
-} from '../index';
-import DialogWrapper from './DialogWrapper';
+} from '../types';
 
 export const DialogContext = createContext<DialogContextValues>({} as any);
 
 const DialogProvider: Component<DialogProviderProps> = ({ children, options }) => {
   const [dialogs, setDialogs] = useState<DialogState>({});
 
-  const addDialog = (id: string, dialog: Dialog) => setDialogs({ ...dialogs, [id]: { ...dialog } });
+  const addDialog = (id: string, dialog: Dialog) => {
+    dialogs[id] = dialog;
+    setDialogs(dialogs);
+  };
 
   const closeDialog = (id: string) => {
     delete dialogs[id];
-    setDialogs({ ...dialogs });
+    setDialogs(dialogs);
   };
 
   return (
