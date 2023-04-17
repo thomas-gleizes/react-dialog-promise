@@ -7,7 +7,7 @@ Use dialog in React, without tears
 React Dialog promise is available as an [npm package](https://www.npmjs.org/package/react-dialog-promise).
 
 ```sh
-npm install react-dialog-promise
+npm install core
 ```
 
 ## Usage
@@ -17,7 +17,7 @@ First, you have to wrap your app with DialogProvider
 ```typescript jsx
 import React from 'react';
 import ReactDOM from "react-dom";
-import { DialogProvider } from 'react-dialog-promise';
+import { DialogProvider } from 'core';
 
 import MyApp from "MyApp";
 
@@ -35,7 +35,7 @@ Then, you have to create your dialog Component
 
 ```typescript jsx
 import React from 'react';
-import { DialogComponent } from 'react-dialog-promise';
+import { DialogComponent } from 'core';
 import {
   Modal,
   ModalOverlay,
@@ -81,7 +81,7 @@ Finally, you can use your dialog component in your app
 
 ```typescript jsx
 import React from 'react';
-import { useDialog } from 'react-dialog-promise';
+import { useDialog } from 'core';
 import MyDialog from "./MyDialog";
 
 const MyApp: React.FC = () => {

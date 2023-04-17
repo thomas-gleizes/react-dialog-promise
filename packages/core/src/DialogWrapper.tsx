@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import useDialogContext from './useDialogContext';
-import { Component, Dialog, DialogOptions } from '../types';
+import { Component, Dialog, DialogOptions } from './types';
 
 const DEFAULT_TIMEOUT = 300;
 

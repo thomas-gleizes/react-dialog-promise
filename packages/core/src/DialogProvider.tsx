@@ -7,11 +7,11 @@ import type {
   DialogContextValues,
   DialogProviderProps,
   DialogState,
-} from '../types';
+} from './types';
 
 export const DialogContext = createContext<DialogContextValues>({} as any);
 
-const DialogProvider: Component<DialogProviderProps> = ({ children, options }) => {
+export const DialogProvider: Component<DialogProviderProps> = ({ children, options }) => {
   const [dialogs, setDialogs] = useState<DialogState>({});
 
   const addDialog = (id: string, dialog: Dialog) => {
@@ -31,5 +31,3 @@ const DialogProvider: Component<DialogProviderProps> = ({ children, options }) =
     </DialogContext.Provider>
   );
 };
-
-export default DialogProvider;

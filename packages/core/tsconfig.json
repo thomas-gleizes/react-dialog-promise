@@ -8,7 +8,6 @@
     "importHelpers": true,
     "declaration": true,
     "sourceMap": true,
-    "rootDir": "./src",
     "strict": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
@@ -19,8 +18,8 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "noEmit": true,
     "outDir": "dist",
+    "noEmit": true,
     "rootDirs": [
       "src"
     ]
@@ -30,7 +29,6 @@
     "dist"
   ],
   "include": [
-    "src",
-    "types"
+    "src"
   ]
 }

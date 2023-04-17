@@ -1,6 +1,6 @@
 import { v4 as uuid } from 'uuid';
 
-import { UseDialogHook } from '../types';
+import { UseDialogHook } from './types';
 import useDialogContext from './useDialogContext';
 import { useState } from 'react';
 
