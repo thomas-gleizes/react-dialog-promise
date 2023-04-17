@@ -11,7 +11,7 @@ export type Dialog<Props = any, Result = any> = {
   reject: (r: any) => void;
 };
 
-export type DialogState = { [id: string]: Dialog };
+export type DialogState = Record<string, Dialog>;
 
 export type DialogProps<Result = any> = {
   close: (result: Result) => void;

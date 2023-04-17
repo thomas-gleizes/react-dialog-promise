@@ -1,98 +1,102 @@
-import React, { Fragment } from "react";
+import React from "react";
+import { Dialog } from "@headlessui/react";
 import { DialogComponent, useDialog } from "react-dialog-promise";
-import { Dialog, Transition } from "@headlessui/react";
-import { createPortal } from "react-dom";
+import Modal from "./Modal";
 
-const TestModal: DialogComponent<{ title: string }, { confirm: boolean }> = ({
-  title,
-  close,
-  isOpen,
-}) => {
-  if (!isOpen) return null;
+const ExampleModal: DialogComponent<
+  { username: string },
+  { confirm: boolean }
+> = ({ username, close, isOpen }) => {
+  const confirmModal = useDialog(ConfirmModal);
 
-  return createPortal(
-    <Transition appear show={isOpen} as={Fragment}>
-      <Dialog
-        as="div"
-        className="relative z-10"
-        onClose={() => close({ confirm: false })}
-      >
-        <Transition.Child
-          as={Fragment}
-          enter="ease-out duration-300"
-          enterFrom="opacity-0"
-          enterTo="opacity-100"
-          leave="ease-in duration-200"
-          leaveFrom="opacity-100"
-          leaveTo="opacity-0"
-        >
-          <div className="fixed inset-0 bg-black bg-opacity-25" />
-        </Transition.Child>
+  const handleDeactivate = async () => {
+    const result = await confirmModal.open({
+      message: `Are you sure you want to deactivate ${username} account? All data will be permanently removed. This action cannot be undone.`,
+    });
 
-        <div className="fixed inset-0 overflow-y-auto">
-          <div className="flex min-h-full items-center justify-center p-4 text-center">
-            <Transition.Child
-              as={Fragment}
-              enter="ease-out duration-300"
-              enterFrom="opacity-0 scale-95"
-              enterTo="opacity-100 scale-100"
-              leave="ease-in duration-200"
-              leaveFrom="opacity-100 scale-100"
-              leaveTo="opacity-0 scale-95"
-            >
-              <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
-                <Dialog.Title
-                  as="h3"
-                  className="text-lg font-medium leading-6 text-gray-900"
-                >
-                  {title}
-                </Dialog.Title>
-                <div className="mt-2">
-                  <p className="text-sm text-gray-500">
-                    Your payment has been successfully submitted. We’ve sent you
-                    an email with all of the details of your order.
-                  </p>
-                </div>
-
-                <div className="mt-4">
-                  <button
-                    type="button"
-                    className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                    onClick={() => close({ confirm: true })}
-                  >
-                    Got it, thanks!
-                  </button>
-                </div>
-              </Dialog.Panel>
-            </Transition.Child>
-          </div>
-        </div>
-      </Dialog>
-    </Transition>,
-    document.getElementById("portal") as HTMLElement
-  );
-};
-
-function App() {
-  const testModal = useDialog(TestModal);
-
-  const handleClick = async () => {
-    console.log("click");
-    const result = await testModal.open({ title: "Hello World" });
-
-    console.log("Result", result);
+    if (result) close({ confirm: true });
   };
 
   return (
-    <div>
+    <Modal isOpen={isOpen} onClose={() => close({ confirm: false })}>
+      <Dialog.Panel>
+        <Dialog.Title>Desactive your account</Dialog.Title>
+        <Dialog.Description>
+          This will permanently deactivate your account
+        </Dialog.Description>
+
+        <p>
+          Are you sure you want to deactivate {username} account? All data will
+          be permanently removed. This action cannot be undone.
+        </p>
+
+        <div className="space-x-4">
+          <button
+            className="bg-red-500 border-2 border-red-700 px-4 py-2 text-lg font-semibold rounded-lg text-white"
+            onClick={handleDeactivate}
+          >
+            Deactivate
+          </button>
+          <button
+            className="bg-white border-2 border-gray-500 px-4 py-2 text-lg font-semibold rounded-lg text-black"
+            onClick={() => close({ confirm: true })}
+          >
+            Cancel
+          </button>
+        </div>
+      </Dialog.Panel>
+    </Modal>
+  );
+};
+
+const ConfirmModal: DialogComponent<{ message: string }, boolean> = ({
+  isOpen,
+  close,
+  message,
+}) => {
+  return (
+    <Modal isOpen={isOpen} onClose={() => close(false)}>
+      <Dialog.Panel>
+        <Dialog.Title>Please confirm</Dialog.Title>
+        <Dialog.Description>{message}</Dialog.Description>
+        <div className="space-x-3">
+          <button
+            className="bg-green-500 border-2 border-green-700 px-4 py-2 text-lg font-semibold rounded-lg text-white"
+            onClick={() => close(false)}
+          >
+            Cancel
+          </button>
+          <button
+            className="bg-blue-500 border-2 border-blue-700 px-4 py-2 text-lg font-semibold rounded-lg text-white"
+            onClick={() => close(true)}
+          >
+            Confirm
+          </button>
+        </div>
+      </Dialog.Panel>
+    </Modal>
+  );
+};
+
+const App: React.FC = () => {
+  const testModal = useDialog(ExampleModal);
+
+  const handleClick = async () => {
+    const result = await testModal.open({ username: "Hello World" });
+
+    if (result.confirm) alert("Account deactivated");
+  };
+
+  return (
+    <div className="h-screen w-screen flex items-center justify-center">
       <button
-        className="bg-blue-500 text-white px-4 py-2 rounded-lg text-lg shadow"
+        className="bg-blue-500 text-white px-5 py-1 rounded-lg text-lg shadow"
         onClick={handleClick}
       >
         OPEN
       </button>
     </div>
   );
-}
+};
 
 export default App;
