@@ -7,7 +7,7 @@ Use dialog in React, without tears
 React Dialog promise is available as an [npm package](https://www.npmjs.org/package/react-dialog-promise).
 
 ```sh
-npm install core
+npm install react-dialog-promise
 ```
 
 ## Usage
