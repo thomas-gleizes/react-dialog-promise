@@ -1,8 +1,6 @@
-import * as React from 'react';
+import { ReactNode, FunctionComponent } from 'react';
 
-export type Component<Props = {}> = React.FunctionComponent<Props>;
-
-export type ReactNode = React.ReactNode;
+export type Component<Props = {}> = FunctionComponent<Props>;
 
 export type Dialog<Props = any, Result = any> = {
   component: DialogComponent<Result>;
@@ -23,16 +21,18 @@ export type DialogOptions = { timeout?: number };
 export type DialogComponent<Props = {}, Result = any> = Component<DialogProps<Result> & Props>;
 
 export type DialogProviderProps = { children: ReactNode; options?: DialogOptions };
+export type DialogContainerProps = {
+  dialog: Dialog;
+  close: () => void;
+  options?: DialogOptions;
+};
 
 export type DialogContextValues = {
-  dialogs: DialogState;
   addDialog: (id: string, dialog: Dialog) => void;
-  closeDialog: (id: string) => void;
 };
 
 export type UseDialogHookResult<Props, Result> = {
   open: (props: Props) => Promise<Result>;
-  close: () => void;
   uid: string;
 };
 
