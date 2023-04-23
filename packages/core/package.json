@@ -2,7 +2,7 @@
   "author": "thomas-gleizes",
   "name": "react-dialog-promise",
   "description": "A simple and typesafe React dialog system that returns a promise",
-  "version": "0.3.8",
+  "version": "0.3.10",
   "license": "MIT",
   "keywords": [
     "react",
@@ -23,7 +23,8 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
-    "/dist"
+    "/dist",
+    "/src"
   ],
   "exports": {
     ".": {
