@@ -17,7 +17,7 @@ First, you have to wrap your app with DialogProvider
 ```typescript jsx
 import React from 'react';
 import ReactDOM from "react-dom";
-import { DialogProvider } from 'core';
+import { DialogProvider } from 'react-dialog-promise';
 
 import MyApp from "MyApp";
 
@@ -35,7 +35,7 @@ Then, you have to create your dialog Component
 
 ```typescript jsx
 import React from 'react';
-import { DialogComponent } from 'core';
+import { DialogComponent } from "react-dialog-promise";
 import {
   Modal,
   ModalOverlay,
@@ -81,7 +81,8 @@ Finally, you can use your dialog component in your app
 
 ```typescript jsx
 import React from 'react';
-import { useDialog } from 'core';
+import { useDialog } from "react-dialog-promise";
+
 import MyDialog from "./MyDialog";
 
 const MyApp: React.FC = () => {
