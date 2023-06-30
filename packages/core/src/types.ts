@@ -36,7 +36,7 @@ export type DialogContextValues = {
 export type UseDialogHookResult<Props, Result> = {
   isOpen: boolean;
   open: (props: Props) => Promise<Result>;
-  close: (result?: Result) => void;
+  close: (result: Result) => void;
   uid: string;
 };
 

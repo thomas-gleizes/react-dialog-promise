@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { v4 as uuid } from 'uuid';
 
 import { UseDialogHook } from './types';
@@ -9,14 +9,22 @@ export const useDialog: UseDialogHook = (dialog) => {
 
   const [uid] = useState(() => uuid());
 
+  const resolveRef = useRef<PromiseLike<any> | any>();
+
   return {
     uid,
     isOpen: dialogs.hasOwnProperty(uid),
     open: function (props) {
-      return new Promise((resolve, reject) =>
-        addDialog(this.uid, { component: dialog, props, resolve, reject })
-      );
+      return new Promise((resolve, reject) => {
+        resolveRef.current = resolve;
+        addDialog(this.uid, { component: dialog, props, resolve, reject });
+      });
     },
-    close: () => closeDialog(uid),
+    close: function (result) {
+      if (!this.isOpen) return;
+
+      resolveRef.current(result);
+      closeDialog(uid);
+    },
   };
 };

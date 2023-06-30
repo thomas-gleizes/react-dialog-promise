@@ -114,7 +114,6 @@ const App: React.FC = () => {
   useEffect(() => {
     if (testModal.isOpen) {
       const interval = setTimeout(() => {
-        console.log("TestModal", testModal);
         testModal.close({ confirm: false });
       }, 5000);
 

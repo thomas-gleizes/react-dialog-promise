@@ -13,6 +13,10 @@
   "bugs": {
     "url": "https://github.com/thomas-gleizes/react-dialog-promise/issues"
   },
+  "scripts": {
+    "build": "cd packages/core && pnpm build",
+    "exemple:simple": "cd examples/simple pnpm dev"
+  },
   "devDependencies": {
     "eslint": "^8.38.0",
     "prettier": "^2.8.7"
