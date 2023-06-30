@@ -27,7 +27,7 @@ export const DialogProvider: Component<DialogProviderProps> = ({ children, optio
   };
 
   return (
-    <DialogContext.Provider value={{ addDialog }}>
+    <DialogContext.Provider value={{ addDialog, closeDialog, dialogs }}>
       {children}
       {Object.entries(dialogs).map(([uid, dialog]) => (
         <DialogContainer

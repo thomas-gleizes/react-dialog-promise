@@ -29,10 +29,14 @@ export type DialogContainerProps = {
 
 export type DialogContextValues = {
   addDialog: (id: string, dialog: Dialog) => void;
+  closeDialog: (id: string) => void;
+  dialogs: DialogState;
 };
 
 export type UseDialogHookResult<Props, Result> = {
+  isOpen: boolean;
   open: (props: Props) => Promise<Result>;
+  close: (result?: Result) => void;
   uid: string;
 };
 

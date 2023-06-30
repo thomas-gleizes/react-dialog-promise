@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Dialog } from "@headlessui/react";
 import { DialogComponent, useDialog } from "react-dialog-promise";
 import Modal from "./Modal";
@@ -85,6 +85,8 @@ const App: React.FC = () => {
 
   const handleDialog1 = async () => {
     const result = await testModal.open({ username: "Hello World" });
+
+    console.log(result);
   };
 
   const handleDialog2 = async () => {
@@ -108,6 +110,17 @@ const App: React.FC = () => {
       const result = await confirmModal2.open({ message: "Continue" });
     }
   };
+
+  useEffect(() => {
+    if (testModal.isOpen) {
+      const interval = setTimeout(() => {
+        console.log("TestModal", testModal);
+        testModal.close({ confirm: false });
+      }, 5000);
+
+      return () => clearInterval(interval);
+    }
+  }, [testModal.isOpen]);
 
   return (
     <div className="h-screen w-screen flex items-center justify-center space-x-3">
