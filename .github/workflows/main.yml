@@ -24,9 +24,48 @@ jobs:
       - run: pnpm test
       - run: pnpm build
 
+  auto-tag:
+    needs: ci
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 21.x
+          cache: "pnpm"
+          registry-url: https://registry.npmjs.org
+      - run: pnpm install --frozen-lockfile
+      - name: Bump version and push tag
+        id: tag_version
+        uses: actions/github-script@v5
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            const semver = require('semver')
+            const fs = require('fs')
+            const path = require('path')
+            const packagePath = path.resolve(process.env.GITHUB_WORKSPACE, 'package.json')
+            const packageLockPath = path.resolve(process.env.GITHUB_WORKSPACE, 'package-lock.json')
+            const packageJson = require(packagePath)
+            const version = semver.inc(packageJson.version, 'patch')
+            packageJson.version = version
+            fs.writeFileSync(packagePath, JSON.stringify(packageJson, null, 2))
+            const packageLockJson = require(packageLockPath)
+            packageLockJson.version = version
+            fs.writeFileSync(packageLockPath, JSON.stringify(packageLockJson, null, 2))
+            console.log(`::set-output name=version::${version}`)
+            return version
+      - name: Commit and tag
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add package.json package-lock.json
+          git commit -m "chore: bump version to ${{ steps.tag_version.outputs.version }}"
+          git tag v${{ steps.tag_version.outputs.version }}
+          git push origin HEAD:main --follow-tags
 
   publish:
-    needs: ci
+    needs: [ci, auto-tag]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
