@@ -27,6 +27,10 @@ jobs:
   auto-tag:
     needs: ci
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version:
+          - 21.x
     steps:
       - uses: phish108/autotag-action@v1.1.55
         with:
