@@ -17,8 +17,13 @@ jobs:
           node-version: 21.x
           cache: "pnpm"
 
+
       - run: pnpm install --frozen-lockfile
       - run: pnpm lint
       - run: pnpm test
       - run: pnpm build
       - run: pnpm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+
