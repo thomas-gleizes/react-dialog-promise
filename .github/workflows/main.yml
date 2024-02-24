@@ -32,9 +32,37 @@ jobs:
         node-version:
           - 21.x
     steps:
-      - uses: phish108/autotag-action@v1.1.55
+      - name: Checkout code
+        uses: actions/checkout@v3
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN}}
+          fetch-depth: 0
+      - name: Get last tag
+        id: get_last_tag
+        run: echo tag=$(git describe --abbrev=0 --tags --always --first-parent HEAD) >> $GITHUB_OUTPUT
+      - name: Get commit message
+        id: get_commit_message
+        run: echo "message=$(git log -1 --pretty=%B)" >> $GITHUB_OUTPUT
+      - name: Auto-tag
+        if: ${{ github.ref == 'refs/heads/main' }}
+        env:
+          LAST_TAG: ${{ steps.get_last_tag.outputs.tag }}
+          MESSAGE: ${{ steps.get_commit_message.outputs.message }}
+        run: |
+          git config user.name autotag
+          git config user.email autotag@github.com
+          TAG_PARTS=(${LAST_TAG//./ })
+          if [[ $MESSAGE == *'!'* ]]; then
+            NEW_TAG=$((${TAG_PARTS[0]}+1)).0.0
+          elif [[ $MESSAGE == *'feat'* ]]; then
+            NEW_TAG=${TAG_PARTS[0]}.$((${TAG_PARTS[1]}+1)).0
+          elif [[ $MESSAGE == *'fix'* ]]; then
+            NEW_TAG=${TAG_PARTS[0]}.${TAG_PARTS[1]}.$((${TAG_PARTS[2]}+1))
+          else
+            echo "Nothing to tag"
+            exit 0
+          fi
+          git tag -a $NEW_TAG -m "$MESSAGE"
+          git push origin $NEW_TAG
 
   publish:
     needs: [ci, auto-tag]
