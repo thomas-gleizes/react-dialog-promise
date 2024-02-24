@@ -27,11 +27,16 @@ jobs:
   auto-tag:
     needs: ci
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version:
-          - 21.x
     steps:
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8.15.3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 21.x
+          cache: "pnpm"
+          registry-url: https://registry.npmjs.org
+
       - name: Get last tag
         id: get_last_tag
         run: echo tag=$(git describe --abbrev=0 --tags --always --first-parent HEAD) >> $GITHUB_OUTPUT
