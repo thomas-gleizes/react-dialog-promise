@@ -53,10 +53,13 @@ jobs:
           TAG_PARTS=(${LAST_TAG//./ })
           if [[ $MESSAGE == *'!'* ]]; then
             NEW_TAG=$((${TAG_PARTS[0]}+1)).0.0
+            npm version major
           elif [[ $MESSAGE == *'feat'* ]]; then
             NEW_TAG=${TAG_PARTS[0]}.$((${TAG_PARTS[1]}+1)).0
+            npm version minor
           elif [[ $MESSAGE == *'fix'* ]]; then
             NEW_TAG=${TAG_PARTS[0]}.${TAG_PARTS[1]}.$((${TAG_PARTS[2]}+1))
+            npm version patch
           else
             echo "Nothing to tag"
             exit 0
@@ -78,8 +81,6 @@ jobs:
           cache: "pnpm"
           registry-url: https://registry.npmjs.org
 
-      - run: pnpm install --frozen-lockfile
-      - run: pnpm build
       - run: pnpm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
