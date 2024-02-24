@@ -71,7 +71,6 @@ jobs:
     needs: [ci, auto-tag]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
       - uses: pnpm/action-setup@v2
         with:
           version: 8.15.3
