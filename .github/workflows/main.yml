@@ -54,13 +54,13 @@ jobs:
           TAG_PARTS=(${LAST_TAG//./ })
           if [[ $MESSAGE == *'!'* ]]; then
             NEW_TAG=$((${TAG_PARTS[0]}+1)).0.0
-            npm version major
+            pnpm version major
           elif [[ $MESSAGE == *'feat'* ]]; then
             NEW_TAG=${TAG_PARTS[0]}.$((${TAG_PARTS[1]}+1)).0
-            npm version minor
+            pnpm version minor
           elif [[ $MESSAGE == *'fix'* ]]; then
             NEW_TAG=${TAG_PARTS[0]}.${TAG_PARTS[1]}.$((${TAG_PARTS[2]}+1))
-            npm version patch
+            pnpm version patch
           else
             echo "Nothing to tag"
             exit 0
