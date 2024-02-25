@@ -1,0 +1,25 @@
+name: validation
+
+on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  validation:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8.15.3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 21.x
+          cache: "pnpm"
+          registry-url: https://registry.npmjs.org
+
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm lint
+      - run: pnpm test
+      - run: pnpm build
