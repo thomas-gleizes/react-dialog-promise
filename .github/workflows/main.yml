@@ -63,23 +63,27 @@ jobs:
           fi
           git tag -a $NEW_TAG -m "$MESSAGE"
           git push origin $NEW_TAG
-          pnpm version $NEW_TAG
 
   publish:
     needs: [ci, auto-tag]
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
       - uses: pnpm/action-setup@v2
         with:
           version: 8.15.3
-
-      - run: | 
-          ls -la
-          echo "TAG $NEW_TAG"
-          echo "MESSAGE $MESSAGE"
-          pnpm version
-      - run: pnpm install --frozen-lockfile
-      - run: pnpm run build
-      - run: pnpm publish
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Changement du tag$(git describe --tags)
+        run: |
+          TAG=$(git describe --abbrev=0 --tags --always --first-parent HEAD)
+          pnpm version $TAG
+      - name: build
+        run: pnpm run build
+      - name: Publish
+        run: pnpm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
