@@ -34,7 +34,7 @@ jobs:
       - run: pnpm build
 
   auto-tag:
-    needs: ci
+    needs: testing
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -74,7 +74,7 @@ jobs:
           git push origin $NEW_TAG
 
   publish:
-    needs: [ci, auto-tag]
+    needs: [testing, auto-tag]
     if: ${{ always() || startsWith(github.ref, 'refs/tags/') }}
     runs-on: ubuntu-latest
     steps:
