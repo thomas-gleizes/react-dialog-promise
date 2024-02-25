@@ -84,9 +84,7 @@ jobs:
           git config user.email autotag@github.com
           TAG=$(git describe --abbrev=0 --tags --always --first-parent HEAD)
           pnpm version $TAG
-      - name: build
-        run: pnpm run build
-      - name: Publish
-        run: pnpm publish
+      - run: pnpm run build
+      - run: pnpm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
