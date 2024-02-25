@@ -64,8 +64,6 @@ jobs:
           git tag -a $NEW_TAG -m "$MESSAGE"
           git push origin $NEW_TAG
           pnpm version $NEW_TAG
-          git add package.json
-          git commit -m "$NEW_TAG"
           git push origin main
 
   publish:
