@@ -59,7 +59,7 @@ jobs:
             NEW_TAG=${TAG_PARTS[0]}.${TAG_PARTS[1]}.$((${TAG_PARTS[2]}+1))
           else
             echo "Nothing to tag"
-            exit 0
+            exit 1
           fi
           git tag -a $NEW_TAG -m "$MESSAGE"
           git push origin $NEW_TAG
