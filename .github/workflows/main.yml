@@ -47,6 +47,7 @@ jobs:
         run: |
           git config user.name autotag
           git config user.email autotag@github.com
+          echo "Last tag: $LAST_TAG"
           TAG_PARTS=(${LAST_TAG//./ })
           if [[ $MESSAGE == *'!'* ]]; then
             NEW_TAG=$((${TAG_PARTS[0]}+1)).0.0
@@ -55,6 +56,7 @@ jobs:
             NEW_TAG=${TAG_PARTS[0]}.$((${TAG_PARTS[1]}+1)).0
             pnpm version minor
           elif [[ $MESSAGE == *'fix'* ]]; then
+            echo "TAG_PARTS: ${TAG_PARTS[0]}.${TAG_PARTS[1]}.${TAG_PARTS[2]}"
             NEW_TAG=${TAG_PARTS[0]}.${TAG_PARTS[1]}.$((${TAG_PARTS[2]}+1))
             pnpm version patch
           else
