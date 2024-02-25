@@ -80,6 +80,8 @@ jobs:
         run: pnpm install --frozen-lockfile
       - name: Changement du tag$(git describe --tags)
         run: |
+          git config user.name autotag
+          git config user.email autotag@github.com
           TAG=$(git describe --abbrev=0 --tags --always --first-parent HEAD)
           pnpm version $TAG
       - name: build
