@@ -85,6 +85,8 @@ jobs:
           TAG=$(git describe --abbrev=0 --tags --always --first-parent HEAD)
           pnpm version $TAG
       - run: pnpm run build
+      - run: |
+          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
       - run: pnpm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
