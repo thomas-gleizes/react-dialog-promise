@@ -66,6 +66,7 @@ jobs:
 
   publish:
     needs: [ci, auto-tag]
+    if: ${{ always() || startsWith(github.ref, 'refs/tags/') }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
